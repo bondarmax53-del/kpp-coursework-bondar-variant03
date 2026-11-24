@@ -1,0 +1,10 @@
+target/
+**/target/
+.idea/
+*.iml
+out/
+*.log
+.env
+application-local.properties
+# локальні налаштування БД з паролем
+server/src/main/resources/db.properties

@@ -1,0 +1,4 @@
+# Local DB settings (XAMPP MariaDB, port 3307). File is in .gitignore.
+db.url=jdbc:mysql://localhost:3307/lab_maintenance?useUnicode=true&characterEncoding=UTF-8
+db.user=root
+db.password=

@@ -1,0 +1,54 @@
+### Перевірка сервера
+GET http://localhost:8080/lab-maintenance-server/api/health
+
+### Список обладнання
+GET http://localhost:8080/lab-maintenance-server/api/equipment
+
+### Додати обладнання
+POST http://localhost:8080/lab-maintenance-server/api/equipment
+Content-Type: application/json
+
+{"inventoryNumber": "INV-0100", "name": "Блок живлення лабораторний", "model": "Korad KA3005D",
+ "location": "ауд. 312", "criticality": 3, "commissionedDate": "2025-09-01"}
+
+### Нова заявка (пріоритет I рахує сервер)
+POST http://localhost:8080/lab-maintenance-server/api/requests
+Content-Type: application/json
+
+{"equipmentId": 1, "description": "Не синхронізується розгортка", "severity": 4, "downtimeHours": 36}
+
+### Заявки, від найтерміновішої
+GET http://localhost:8080/lab-maintenance-server/api/requests
+
+### Лише нові
+GET http://localhost:8080/lab-maintenance-server/api/requests?status=NEW
+
+### Діагностика: NEW → DIAGNOSED
+POST http://localhost:8080/lab-maintenance-server/api/requests/3/status
+Content-Type: application/json
+
+{"status": "DIAGNOSED", "specialistId": 1, "diagnosis": "Окислені контакти нагрівача"}
+
+### Недопустимий перехід → 409
+POST http://localhost:8080/lab-maintenance-server/api/requests/3/status
+Content-Type: application/json
+
+{"status": "DONE"}
+
+### DIAGNOSED → IN_SERVICE
+POST http://localhost:8080/lab-maintenance-server/api/requests/3/status
+Content-Type: application/json
+
+{"status": "IN_SERVICE"}
+
+### Сервісний запис
+POST http://localhost:8080/lab-maintenance-server/api/requests/3/records
+Content-Type: application/json
+
+{"workDescription": "Чистка контактів, заміна жала", "hoursSpent": 0.75, "cost": 180}
+
+### IN_SERVICE → DONE
+POST http://localhost:8080/lab-maintenance-server/api/requests/3/status
+Content-Type: application/json
+
+{"status": "DONE"}

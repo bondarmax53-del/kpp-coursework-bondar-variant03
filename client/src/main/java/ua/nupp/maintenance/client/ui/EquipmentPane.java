@@ -81,12 +81,12 @@ public class EquipmentPane extends BorderPane {
         table.getColumns().add(loc);
         table.getColumns().add(crit);
         table.getColumns().add(date);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        Ui.setUp(table);
         table.getSelectionModel().selectedItemProperty().addListener((obs, old, e) -> fillForm(e));
     }
 
     private VBox buildForm() {
-        GridPane g = new GridPane();
+        GridPane g = Ui.grid();
         g.setHgap(8);
         g.setVgap(8);
         g.addRow(0, new Label("Інв. номер*"), invField);

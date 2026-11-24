@@ -74,7 +74,7 @@ public class RequestPane extends BorderPane {
         setTop(buildToolbar());
         SplitPane split = new SplitPane(buildTable(), buildDetails());
         split.setOrientation(Orientation.VERTICAL);
-        split.setDividerPositions(0.5);
+        split.setDividerPositions(0.55);
         setCenter(split);
         setPadding(new Insets(10));
         showSelected(null);
@@ -145,12 +145,12 @@ public class RequestPane extends BorderPane {
         table.getColumns().add(spec);
         table.getColumns().add(created);
         table.getSelectionModel().selectedItemProperty().addListener((obs, old, r) -> showSelected(r));
-        return table;
+        Ui.setUp(table); return table;
     }
 
     private HBox buildDetails() {
         // --- форма заявки ---
-        GridPane form = new GridPane();
+        GridPane form = Ui.grid();
         form.setHgap(8);
         form.setVgap(8);
         descriptionArea.setPrefRowCount(3);
@@ -172,10 +172,10 @@ public class RequestPane extends BorderPane {
         deleteBtn.setOnAction(e -> deleteRequest());
         VBox formBox = new VBox(8, title("Заявка"), form, new HBox(8, newBtn, saveBtn, deleteBtn),
                 new Label("Пріоритет I розраховує сервер."));
-        formBox.setPrefWidth(420);
+        formBox.setPrefWidth(470);
 
         // --- життєвий цикл ---
-        GridPane life = new GridPane();
+        GridPane life = Ui.grid();
         life.setHgap(8);
         life.setVgap(8);
         diagnosisLabel.setWrapText(true);
@@ -187,7 +187,7 @@ public class RequestPane extends BorderPane {
         nextStatusBtn.setOnAction(e -> moveToNextStatus());
         VBox lifeBox = new VBox(8, title("Життєвий цикл"),
                 new Label("Нова → Діагностовано →\nОбслуговування → Виконано"), life, nextStatusBtn);
-        lifeBox.setPrefWidth(300);
+        lifeBox.setPrefWidth(320);
 
         // --- сервісні записи ---
         TableColumn<ServiceRecord, String> work = new TableColumn<>("Роботи");
@@ -203,7 +203,7 @@ public class RequestPane extends BorderPane {
         records.getColumns().add(hours);
         records.getColumns().add(cost);
         records.getColumns().add(who);
-        records.setPrefHeight(130);
+        records.setPrefHeight(130); Ui.setUp(records);
         records.getSelectionModel().selectedItemProperty().addListener((obs, old, r) -> {
             workField.setText(r == null ? "" : r.getWorkDescription());
             hoursField.setText(r == null ? "" : Ui.nvl(r.getHoursSpent()));
@@ -346,7 +346,7 @@ public class RequestPane extends BorderPane {
         TextArea diagnosis = new TextArea();
         diagnosis.setPrefRowCount(3);
         diagnosis.setWrapText(true);
-        GridPane g = new GridPane();
+        GridPane g = Ui.grid();
         g.setHgap(8);
         g.setVgap(8);
         g.addRow(0, new Label("Фахівець*"), who);

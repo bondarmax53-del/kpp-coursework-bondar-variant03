@@ -3,7 +3,13 @@ package ua.nupp.maintenance.client.ui;
 import javafx.concurrent.Task;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -70,6 +76,25 @@ final class Ui {
     static String text(TextInputControl field) {
         String s = field.getText() == null ? "" : field.getText().trim();
         return s.isEmpty() ? null : s;
+    }
+
+    /** Форма з двох колонок: підписи не обрізаються, поля розтягуються. */
+    static GridPane grid() {
+        GridPane g = new GridPane();
+        g.setHgap(8);
+        g.setVgap(8);
+        ColumnConstraints labels = new ColumnConstraints();
+        labels.setMinWidth(Region.USE_PREF_SIZE);
+        ColumnConstraints fields = new ColumnConstraints();
+        fields.setHgrow(Priority.ALWAYS);
+        g.getColumnConstraints().addAll(labels, fields);
+        return g;
+    }
+
+    /** Таблиця на всю ширину з українським текстом, коли даних немає. */
+    static void setUp(TableView<?> table) {
+        table.setPlaceholder(new Label("Немає даних"));
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
     static String nvl(Object o) {

@@ -65,12 +65,12 @@ public class SpecialistPane extends BorderPane {
         table.getColumns().add(phone);
         table.getColumns().add(email);
         table.getColumns().add(active);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        Ui.setUp(table);
         table.getSelectionModel().selectedItemProperty().addListener((obs, old, s) -> fillForm(s));
     }
 
     private VBox buildForm() {
-        GridPane g = new GridPane();
+        GridPane g = Ui.grid();
         g.setHgap(8);
         g.setVgap(8);
         g.addRow(0, new Label("ПІБ*"), nameField);
